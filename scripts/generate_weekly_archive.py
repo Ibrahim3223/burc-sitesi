@@ -21,34 +21,46 @@ CONTENT_DIR = PROJECT_ROOT / 'hugo-site' / 'content' / 'burc'
 
 def create_weekly_prompt(burc_data, tarih_araligi):
     """Haftalık yorum promptu"""
-    return f"""Sen astrologsun. {burc_data['ad']} burcu için {tarih_araligi} haftalık yorum yaz.
+    return f"""Sen profesyonel bir Türk astrologsun. {burc_data['ad']} burcu için {tarih_araligi} haftalık burç yorumu yaz.
 
 ## Haftanın Genel Enerjisi
-3-4 cümle
+5-6 cümle ile haftanın genel enerjisini detaylı anlat. Gezegen hareketlerinden ve kozmik etkilerden bahset.
+
 ## Aşk ve İlişkiler
-3-4 cümle (bekar ve ilişki olanlara ayrı değin)
+5-6 cümle ile aşk hayatı için öngörüler yaz. Bekarlar için ve ilişkide olanlar için ayrı ayrı detaylı tavsiyeler ver.
+
 ## Kariyer ve Finans
-3-4 cümle
+5-6 cümle ile iş hayatı ve finansal konularda tavsiyeler ver. Hafta içi dikkat edilmesi gerekenlerden bahset.
+
 ## Sağlık ve Wellness
-2-3 cümle
+4-5 cümle ile fiziksel ve mental sağlık için öneriler ver. Beslenme, egzersiz ve stres yönetimi hakkında tavsiyeler ekle.
+
 ## Haftanın Önemli Günleri
 ### Pazartesi
-1-2 cümle
+2-3 cümle ile günün enerjisi ve dikkat edilmesi gerekenler
 ### Çarşamba
-1-2 cümle
+2-3 cümle ile günün enerjisi ve fırsatlar
 ### Cuma
-1-2 cümle
+2-3 cümle ile hafta sonu öncesi değerlendirme
+
 ## Haftanın Tavsiyesi
-2 cümle
+3-4 cümle ile haftanın en önemli tavsiyesini ver. Motivasyon verici ve uygulanabilir olsun.
 
-Türkçe yaz, sadece içeriği yaz."""
+KRİTİK KURALLAR:
+- SADECE TÜRKÇE yaz, kesinlikle başka dilde kelime kullanma
+- Arapça, İngilizce veya başka hiçbir dilde kelime KULLANMA
+- Tüm kelimeler %100 Türkçe olmalı
+- Pozitif ama gerçekçi bir dil kullan
+- Sadece içeriği yaz, başka açıklama ekleme
+- Markdown formatında yaz
+- Her bölümü ## ile başlat"""
 
-def generate_with_groq(prompt, max_tokens=2000, temperature=0.8):
+def generate_with_groq(prompt, max_tokens=3000, temperature=0.7):
     """Groq API ile içerik üret"""
     try:
         result = client.chat.completions.create(
             messages=[
-                {"role": "system", "content": "Sen profesyonel bir astrolog ve içerik yazarısın. Türkçe burç içerikleri yazıyorsun."},
+                {"role": "system", "content": "Sen profesyonel bir Türk astrolog ve içerik yazarısın. SADECE Türkçe burç içerikleri yazıyorsun. Kesinlikle başka dilde kelime kullanma."},
                 {"role": "user", "content": prompt}
             ],
             model="llama-3.3-70b-versatile",

@@ -30,7 +30,7 @@ GUNLUK_DIR = PROJECT_ROOT / 'hugo-site' / 'content' / 'gunluk'  # Anasayfa için
 
 def create_daily_prompt(burc_data, tarih):
     """Günlük yorum promptu"""
-    return f"""Sen profesyonel bir astrologsun. {burc_data['ad']} burcu için {tarih} tarihli günlük burç yorumu yaz.
+    return f"""Sen profesyonel bir Türk astrologsun. {burc_data['ad']} burcu için {tarih} tarihli günlük burç yorumu yaz.
 
 BURÇ: {burc_data['ad']} ({burc_data['tarih']})
 TARİH: {tarih}
@@ -38,32 +38,35 @@ TARİH: {tarih}
 YAZIYI ŞU FORMATTA YAZ:
 
 ## Genel Enerji
-2-3 cümle ile günün genel enerjisini anlat
+4-5 cümle ile günün genel enerjisini detaylı anlat. Gezegen konumlarından, günün atmosferinden ve genel eğilimlerden bahset.
 
 ## Aşk ve İlişkiler
-2-3 cümle ile aşk hayatı için öngörüler
+4-5 cümle ile aşk hayatı için öngörüler yaz. Bekarlar ve ilişkisi olanlar için ayrı ayrı tavsiyeler ver.
 
 ## Kariyer ve İş
-2-3 cümle ile iş hayatı için tavsiyeler
+4-5 cümle ile iş hayatı için tavsiyeler ver. Toplantılar, projeler, iş arkadaşları ile ilişkiler hakkında detaylı yaz.
 
 ## Sağlık
-1-2 cümle ile sağlık konusunda dikkat edilmesi gerekenler
+3-4 cümle ile sağlık konusunda dikkat edilmesi gerekenler. Fiziksel ve mental sağlık için öneriler ver.
 
 ## Şans Faktörleri
-- **Şans Puanı:** 7/10 (1-10 arası bir puan)
-- **Şans Sayısı:** {burc_data['sans_sayilari'][0]} (burcun şans sayılarından birini kullan)
-- **Şans Rengi:** {burc_data['sans_renkleri'][0]} (burcun şans renklerinden birini kullan)
+- **Şans Puanı:** (1-10 arası bir puan ver)/10
+- **Şans Sayısı:** {burc_data['sans_sayilari'][0]}
+- **Şans Rengi:** {burc_data['sans_renkleri'][0]}
 
 ## Günün Tavsiyesi
-1 cümle, kısa ve öz bir tavsiye
+2-3 cümle ile günün en önemli tavsiyesini ver. Motivasyon verici ve uygulanabilir olsun.
 
-ÖNEMLİ:
-- Tamamen Türkçe yaz
+KRİTİK KURALLAR:
+- SADECE TÜRKÇE yaz, kesinlikle başka dilde kelime kullanma
+- Arapça, İngilizce veya başka hiçbir dilde kelime KULLANMA
+- Tüm kelimeler %100 Türkçe olmalı
 - Pozitif ama gerçekçi bir dil kullan
 - Spesifik ve kişisel önerilerde bulun
 - Sadece içeriği yaz, başka açıklama ekleme
 - Markdown formatında yaz
-- Her bölümü ## ile başlat"""
+- Her bölümü ## ile başlat
+- Akıcı ve doğal Türkçe kullan"""
 
 def generate_content_with_groq(prompt, max_retries=3):
     """Groq API ile içerik üret"""
@@ -73,7 +76,7 @@ def generate_content_with_groq(prompt, max_retries=3):
                 messages=[
                     {
                         "role": "system",
-                        "content": "Sen profesyonel bir astrolog ve günlük burç yorumları yazarısın."
+                        "content": "Sen profesyonel bir Türk astrolog ve günlük burç yorumları yazarısın. SADECE Türkçe yaz. Kesinlikle Arapça, İngilizce veya başka dilde kelime kullanma."
                     },
                     {
                         "role": "user",
@@ -81,8 +84,8 @@ def generate_content_with_groq(prompt, max_retries=3):
                     }
                 ],
                 model="llama-3.3-70b-versatile",
-                temperature=0.8,
-                max_tokens=1500,
+                temperature=0.7,
+                max_tokens=2500,
                 top_p=0.9
             )
 

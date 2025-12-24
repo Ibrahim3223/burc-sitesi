@@ -22,36 +22,49 @@ CONTENT_DIR = PROJECT_ROOT / 'hugo-site' / 'content' / 'burc'
 def create_monthly_prompt(burc_data, ay_tam, aylar):
     """Aylık yorum promptu"""
     now = datetime.now()
-    return f"""Sen astrologsun. {burc_data['ad']} burcu için {ay_tam} aylık yorum yaz.
+    return f"""Sen profesyonel bir Türk astrologsun. {burc_data['ad']} burcu için {ay_tam} aylık burç yorumu yaz.
 
 ## Ayın Genel Değerlendirmesi
-4-5 cümle, planetsel hareketler
+6-7 cümle ile ayın genel enerjisini detaylı anlat. Gezegen hareketlerinden, retrolardan ve kozmik etkilerden bahset.
+
 ## Aşk ve İlişkiler
-4-5 cümle (ilk yarı ve ikinci yarı ayır)
+6-7 cümle ile aşk hayatı için öngörüler yaz. Ayın ilk yarısı ve ikinci yarısı için ayrı değerlendirme yap. Bekarlar ve ilişkide olanlar için tavsiyeler ver.
+
 ## Kariyer ve İş Hayatı
-4-5 cümle
+6-7 cümle ile iş hayatında beklenen gelişmeleri anlat. Projeler, iş görüşmeleri ve kariyer fırsatları hakkında bilgi ver.
+
 ## Finans ve Para
-3-4 cümle
+5-6 cümle ile finansal konularda öngörüler yaz. Yatırımlar, harcamalar ve para yönetimi hakkında tavsiyeler ver.
+
 ## Sağlık ve Enerji
-2-3 cümle
+4-5 cümle ile fiziksel ve mental sağlık için ay boyunca dikkat edilmesi gerekenleri anlat.
+
 ## Ayın Önemli Tarihleri
 ### 5 {aylar[now.month]} - Yeni Ay
-2 cümle
+3-4 cümle ile yeni ayın etkileri ve yapılması gerekenler
 ### 15 {aylar[now.month]} - Dolunay
-2 cümle
+3-4 cümle ile dolunayın etkileri ve dikkat edilmesi gerekenler
 ### 23 {aylar[now.month]} - Özel Gün
-2 cümle
+3-4 cümle ile bu günün özel enerjisi
+
 ## Ayın Tavsiyesi
-2-3 cümle
+4-5 cümle ile ayın en önemli tavsiyesini ver. Motivasyon verici ve ay boyunca uygulanabilir olsun.
 
-Türkçe yaz, sadece içeriği yaz."""
+KRİTİK KURALLAR:
+- SADECE TÜRKÇE yaz, kesinlikle başka dilde kelime kullanma
+- Arapça, İngilizce veya başka hiçbir dilde kelime KULLANMA
+- Tüm kelimeler %100 Türkçe olmalı
+- Pozitif ama gerçekçi bir dil kullan
+- Sadece içeriği yaz, başka açıklama ekleme
+- Markdown formatında yaz
+- Her bölümü ## ile başlat"""
 
-def generate_with_groq(prompt, max_tokens=2500, temperature=0.8):
+def generate_with_groq(prompt, max_tokens=3500, temperature=0.7):
     """Groq API ile içerik üret"""
     try:
         result = client.chat.completions.create(
             messages=[
-                {"role": "system", "content": "Sen profesyonel bir astrolog ve içerik yazarısın. Türkçe burç içerikleri yazıyorsun."},
+                {"role": "system", "content": "Sen profesyonel bir Türk astrolog ve içerik yazarısın. SADECE Türkçe burç içerikleri yazıyorsun. Kesinlikle başka dilde kelime kullanma."},
                 {"role": "user", "content": prompt}
             ],
             model="llama-3.3-70b-versatile",
