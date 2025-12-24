@@ -20,7 +20,7 @@ jobs:
       
       - name: Install dependencies
         run: |
-          pip install groq
+          pip install groq python-dotenv
       
       - name: Generate weekly horoscopes
         env:
