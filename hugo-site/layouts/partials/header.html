@@ -1,0 +1,39 @@
+<header class="header">
+    <div class="container">
+        <div class="header-content">
+            <!-- Logo -->
+            <a href="/" class="logo">
+                <img src="/logo.png" alt="Burç Sözlüğü" class="logo-image">
+                <span class="logo-text">Burç Sözlüğü</span>
+            </a>
+
+            <!-- Desktop Navigation -->
+            <nav class="nav-desktop">
+                {{- range .Site.Menus.main }}
+                <a href="{{ .URL }}" class="nav-link{{ if $.IsMenuCurrent "main" . }} active{{ end }}">
+                    {{ .Name }}
+                </a>
+                {{- end }}
+            </nav>
+
+            <!-- Mobile Menu Button -->
+            <button class="mobile-menu-toggle" aria-label="Menü" id="mobileMenuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Menüyü Kapat">×</button>
+        <nav class="mobile-nav">
+            {{- range .Site.Menus.main }}
+            <a href="{{ .URL }}" class="mobile-nav-link{{ if $.IsMenuCurrent "main" . }} active{{ end }}">
+                {{ .Name }}
+            </a>
+            {{- end }}
+        </nav>
+    </div>
+</header>

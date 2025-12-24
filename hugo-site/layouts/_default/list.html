@@ -1,0 +1,62 @@
+{{- define "main" }}
+
+<section class="page-header">
+    <div class="container">
+        <h1 class="page-title">{{ .Title }}</h1>
+        {{- with .Description }}
+        <p class="page-description">{{ . }}</p>
+        {{- end }}
+    </div>
+</section>
+
+<section class="page-content">
+    <div class="container">
+        {{- with .Content }}
+        <div class="content">
+            {{ . }}
+        </div>
+        {{- end }}
+
+        {{- if .Pages }}
+        <div class="list-grid">
+            {{- range .Pages }}
+            <article class="list-card">
+                <h2 class="list-card-title">
+                    <a href="{{ .Permalink }}">{{ .Title }}</a>
+                </h2>
+                {{- with .Description }}
+                <p class="list-card-excerpt">{{ . }}</p>
+                {{- end }}
+                {{- with .Params.element }}
+                <span class="badge badge-element">{{ . }}</span>
+                {{- end }}
+                {{- with .Params.nitelik }}
+                <span class="badge badge-nitelik">{{ . }}</span>
+                {{- end }}
+                <a href="{{ .Permalink }}" class="btn-link">Detaylı Bilgi →</a>
+            </article>
+            {{- end }}
+        </div>
+
+        {{- if gt .Paginator.TotalPages 1 }}
+        <nav class="pagination">
+            {{- if .Paginator.HasPrev }}
+            <a href="{{ .Paginator.Prev.URL }}" class="pagination-link">← Önceki</a>
+            {{- end }}
+
+            {{- range .Paginator.Pagers }}
+            <a href="{{ .URL }}" class="pagination-number{{ if eq . $.Paginator }} active{{ end }}">
+                {{ .PageNumber }}
+            </a>
+            {{- end }}
+
+            {{- if .Paginator.HasNext }}
+            <a href="{{ .Paginator.Next.URL }}" class="pagination-link">Sonraki →</a>
+            {{- end }}
+        </nav>
+        {{- end }}
+        {{- end }}
+    </div>
+</section>
+
+{{- end }}

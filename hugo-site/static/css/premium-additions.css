@@ -1,0 +1,412 @@
+/* ============================================
+   PREMIUM DESIGN 2025 - MOBILE FIRST
+   ============================================ */
+
+/* Typography System - Playfair + Inter */
+h1, h2, h3, h4, h5, h6,
+.logo-text {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+body, p, li, span, button, input {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+/* Responsive Typography */
+h1 { font-size: clamp(1.75rem, 5vw, 3rem); }
+h2 { font-size: clamp(1.25rem, 3vw, 1.75rem); }
+h3 { font-size: clamp(1rem, 2.5vw, 1.25rem); }
+p  { font-size: clamp(0.9375rem, 2vw, 1rem); line-height: 1.8; }
+
+/* Premium Logo */
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.logo-icon {
+    font-size: 1.5rem;
+    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 0 8px rgba(251, 191, 36, 0.3));
+}
+
+.logo-text {
+    font-size: 1.5rem;
+    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: 0.5px;
+}
+
+.logo:hover .logo-icon {
+    filter: drop-shadow(0 0 12px rgba(251, 191, 36, 0.5));
+    transform: rotate(20deg);
+}
+
+@media (max-width: 640px) {
+    .logo-text {
+        font-size: 1.125rem;
+    }
+    .logo-icon {
+        font-size: 1.25rem;
+    }
+}
+
+/* Remove Theme Toggle - HIDE IT */
+#theme-toggle {
+    display: none !important;
+}
+
+/* Premium Header */
+.header {
+    background: rgba(15, 10, 30, 0.95);
+    backdrop-filter: blur(15px);
+    border-bottom: 1px solid rgba(139, 92, 246, 0.15);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 0;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Desktop Navigation */
+.nav-desktop {
+    display: flex;
+    gap: 4px;
+}
+
+.nav-link {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #a5b4fc;
+    padding: 8px 16px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    text-decoration: none;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    color: #ffffff;
+    background: rgba(139, 92, 246, 0.2);
+}
+
+/* Mobile Navigation */
+@media (max-width: 768px) {
+    .nav-desktop {
+        display: none;
+    }
+    
+    .header-content {
+        padding: 12px 16px;
+    }
+}
+
+.mobile-menu-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+}
+
+@media (max-width: 768px) {
+    .mobile-menu-toggle {
+        display: flex;
+    }
+}
+
+.mobile-menu-toggle span {
+    width: 24px;
+    height: 2px;
+    background: #fbbf24;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+.mobile-menu {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 280px;
+    height: 100vh;
+    background: linear-gradient(180deg, #1a1333 0%, #0f0a1e 100%);
+    box-shadow: -4px 0 20px rgba(0, 0, 0, 0.5);
+    transition: right 0.3s ease;
+    z-index: 1000;
+    padding: 80px 24px 24px;
+}
+
+.mobile-menu.open {
+    right: 0;
+}
+
+.mobile-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.mobile-nav-link {
+    color: #cbd5e1;
+    padding: 12px 16px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.mobile-nav-link:hover,
+.mobile-nav-link.active {
+    color: #ffffff;
+    background: rgba(139, 92, 246, 0.2);
+}
+
+/* Premium Burç Cards */
+.zodiac-card {
+    background: linear-gradient(180deg, 
+        rgba(30, 20, 50, 0.8) 0%, 
+        rgba(15, 10, 30, 0.9) 100%
+    );
+    border: 1px solid rgba(139, 92, 246, 0.2);
+    border-radius: 16px;
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+/* Top gradient stripe - burç color */
+.zodiac-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--burc-color, linear-gradient(90deg, #8b5cf6, #a78bfa));
+}
+
+.zodiac-card:hover {
+    transform: translateY(-8px);
+    border-color: rgba(139, 92, 246, 0.5);
+    box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.3),
+        0 0 30px rgba(139, 92, 246, 0.15);
+}
+
+/* Mobile Burç Grid - 2 columns */
+@media (max-width: 640px) {
+    .zodiac-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 12px;
+        padding: 0 12px;
+    }
+    
+    .zodiac-card {
+        padding: 16px;
+    }
+}
+
+/* Info Cards - Yükselen Burç Style */
+.info-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin: 24px 0;
+}
+
+.info-card {
+    background: rgba(139, 92, 246, 0.1);
+    border: 1px solid rgba(139, 92, 246, 0.2);
+    border-radius: 12px;
+    padding: 16px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    min-width: 120px;
+    flex: 1;
+    transition: all 0.2s ease;
+}
+
+.info-card:hover {
+    background: rgba(139, 92, 246, 0.15);
+    border-color: rgba(139, 92, 246, 0.3);
+}
+
+.info-icon {
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+}
+
+.info-label {
+    font-size: 0.625rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #a5b4fc;
+    margin-bottom: 4px;
+    font-weight: 600;
+}
+
+.info-value {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #ffffff;
+}
+
+/* Mobile Info Cards */
+@media (max-width: 640px) {
+    .info-cards {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+    
+    .info-card {
+        padding: 12px;
+        min-width: auto;
+    }
+}
+
+/* Content Cards - No Text Walls! */
+.content-card {
+    background: rgba(20, 15, 35, 0.6);
+    border: 1px solid rgba(139, 92, 246, 0.15);
+    border-radius: 20px;
+    padding: 32px;
+    margin-bottom: 24px;
+}
+
+.content-card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba(139, 92, 246, 0.1);
+}
+
+.content-card-header h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #ffffff;
+    margin: 0;
+}
+
+.content-card p {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #cbd5e1;
+    margin-bottom: 16px;
+    max-width: 70ch; /* Readability */
+}
+
+/* Mobile Content Cards */
+@media (max-width: 640px) {
+    .content-card {
+        padding: 20px;
+        border-radius: 16px;
+        margin-bottom: 16px;
+    }
+    
+    .content-card p {
+        font-size: 0.9375rem;
+        line-height: 1.7;
+    }
+}
+
+/* Mini Cards (strengths/weaknesses) */
+.mini-card {
+    background: rgba(139, 92, 246, 0.1);
+    border-radius: 12px;
+    padding: 16px;
+}
+
+.mini-card-title {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #a78bfa;
+    margin-bottom: 12px;
+}
+
+.mini-card ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.mini-card li {
+    padding: 6px 0;
+    color: #e2e8f0;
+    font-size: 0.875rem;
+}
+
+.mini-card li::before {
+    content: '•';
+    color: #fbbf24;
+    margin-right: 8px;
+    font-weight: bold;
+}
+
+/* Touch-Friendly Elements */
+.btn,
+.nav-link,
+.card-link,
+.menu-item,
+button {
+    min-height: 44px;
+    min-width: 44px;
+}
+
+/* Spacing System */
+:root {
+    --space-xs: 4px;
+    --space-sm: 8px;
+    --space-md: 16px;
+    --space-lg: 24px;
+    --space-xl: 32px;
+    --space-2xl: 48px;
+    --space-3xl: 64px;
+}
+
+@media (max-width: 640px) {
+    :root {
+        --space-lg: 20px;
+        --space-xl: 24px;
+        --space-2xl: 32px;
+        --space-3xl: 48px;
+    }
+}
+
+/* Container */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+@media (max-width: 640px) {
+    .container {
+        padding: 0 16px;
+    }
+}

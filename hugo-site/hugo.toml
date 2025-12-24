@@ -1,0 +1,280 @@
+# Hugo Konfigürasyonu - Burç Sözlüğü
+baseURL = "https://burcsozlugu.com/"
+languageCode = "tr-TR"
+defaultContentLanguage = "tr"
+title = "Burç Sözlüğü - Günlük, Haftalık, Aylık Burç Yorumları 2025"
+description = "12 burç için günlük, haftalık ve aylık burç yorumları. Burç uyumu, yükselen burç hesaplama ve detaylı astroloji bilgileri."
+
+# SEO ayarları
+enableRobotsTXT = true
+canonifyURLs = true
+enableEmoji = false
+
+# Yapı ayarları
+timeout = "30s"
+enableInlineShortcodes = true
+disableKinds = ["robotsTXT"]
+
+# Performans optimizasyonu
+[minify]
+  minifyOutput = true
+  [minify.tdewolff]
+    [minify.tdewolff.html]
+      keepWhitespace = false
+      keepEndTags = true
+      keepDefaultAttrVals = true
+    [minify.tdewolff.css]
+      precision = 0
+      keepCSS2 = true
+    [minify.tdewolff.js]
+      precision = 0
+      keepVarNames = false
+    [minify.tdewolff.json]
+      precision = 0
+      keepNumbers = false
+    [minify.tdewolff.xml]
+      keepWhitespace = false
+
+# Cache optimizasyonu
+[caches]
+  [caches.getjson]
+    dir = ":cacheDir/:project"
+    maxAge = "24h"
+  [caches.getcsv]
+    dir = ":cacheDir/:project"
+    maxAge = "24h"
+  [caches.images]
+    dir = ":resourceDir/_gen"
+    maxAge = -1
+  [caches.assets]
+    dir = ":resourceDir/_gen"
+    maxAge = -1
+  [caches.modules]
+    dir = ":cacheDir/modules"
+    maxAge = -1
+
+# Image processing
+[imaging]
+  resampleFilter = "CatmullRom"
+  quality = 85
+  anchor = "Smart"
+
+# Sitemap konfigürasyonu
+[sitemap]
+  changefreq = "daily"
+  priority = 0.8
+  filename = "sitemap.xml"
+
+# Çıkış formatları
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
+  section = ["HTML", "RSS"]
+  page = ["HTML"]
+
+# Taksonomiler
+[taxonomies]
+  element = "element"
+  nitelik = "nitelik"
+  gezegen = "gezegen"
+
+# Permalink yapısı - Disabled to allow url: parameter in frontmatter
+# [permalinks]
+#   burc = "/:slug/"
+#   yukselen-burc = "/yukselen-burc/:slug/"
+#   burc-uyumu = "/burc-uyumu/:slug/"
+
+# Menü yapısı
+[menus]
+  [[menus.main]]
+    name = "Ana Sayfa"
+    url = "/"
+    weight = 1
+  [[menus.main]]
+    name = "Günlük Yorumlar"
+    url = "/gunluk-burc-yorumlari/"
+    weight = 2
+  [[menus.main]]
+    name = "Haftalık Yorumlar"
+    url = "/haftalik-burc-yorumlari/"
+    weight = 3
+  [[menus.main]]
+    name = "Aylık Yorumlar"
+    url = "/aylik-burc-yorumlari/"
+    weight = 4
+  [[menus.main]]
+    name = "Burç Uyumu"
+    url = "/burc-uyumu/"
+    weight = 5
+  [[menus.main]]
+    name = "Yükselen Burç"
+    url = "/yukselen-burc/"
+    weight = 6
+
+# Footer menüsü
+  [[menus.footer]]
+    name = "Hakkımızda"
+    url = "/hakkimizda/"
+    weight = 1
+  [[menus.footer]]
+    name = "İletişim"
+    url = "/iletisim/"
+    weight = 2
+  [[menus.footer]]
+    name = "Gizlilik Politikası"
+    url = "/gizlilik-politikasi/"
+    weight = 3
+
+# Sayfalama
+[pagination]
+  pagerSize = 12
+
+# İlgili içerik
+[related]
+  includeNewer = true
+  threshold = 80
+  toLower = true
+  [[related.indices]]
+    name = "element"
+    weight = 100
+  [[related.indices]]
+    name = "nitelik"
+    weight = 80
+
+# Markup ayarları
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+  [markup.highlight]
+    noClasses = false
+    style = "monokai"
+
+# Site parametreleri
+[params]
+  author = "Burç Sözlüğü"
+  logo = "/favicons/logo.png"
+  favicon = "/favicons/favicon.ico"
+  description = "Türkiye'nin en kapsamlı burç ve astroloji sitesi. 12 burç için günlük, haftalık, aylık yorumlar ve burç uyumu hesaplama."
+  keywords = ["burç", "burç yorumu", "günlük burç", "haftalık burç", "aylık burç", "burç uyumu", "yükselen burç", "astroloji"]
+
+  # Sosyal medya
+  twitter = ""
+  facebook = ""
+  instagram = ""
+
+  # Google Analytics
+  googleAnalytics = ""
+
+  # Site doğrulama
+  googleSiteVerification = ""
+
+# Burç bilgileri (data olarak kullanılacak)
+[params.burclar]
+  [params.burclar.koc]
+    ad = "Koç"
+    slug = "koc-burcu"
+    tarih = "21 Mart - 20 Nisan"
+    element = "Ateş"
+    nitelik = "Öncü"
+    gezegen = "Mars"
+    renk = "#ef4444"
+    icon = "aries"
+  [params.burclar.boga]
+    ad = "Boğa"
+    slug = "boga-burcu"
+    tarih = "21 Nisan - 21 Mayıs"
+    element = "Toprak"
+    nitelik = "Sabit"
+    gezegen = "Venüs"
+    renk = "#22c55e"
+    icon = "taurus"
+  [params.burclar.ikizler]
+    ad = "İkizler"
+    slug = "ikizler-burcu"
+    tarih = "22 Mayıs - 21 Haziran"
+    element = "Hava"
+    nitelik = "Değişken"
+    gezegen = "Merkür"
+    renk = "#eab308"
+    icon = "gemini"
+  [params.burclar.yengec]
+    ad = "Yengeç"
+    slug = "yengec-burcu"
+    tarih = "22 Haziran - 22 Temmuz"
+    element = "Su"
+    nitelik = "Öncü"
+    gezegen = "Ay"
+    renk = "#e5e7eb"
+    icon = "cancer"
+  [params.burclar.aslan]
+    ad = "Aslan"
+    slug = "aslan-burcu"
+    tarih = "23 Temmuz - 22 Ağustos"
+    element = "Ateş"
+    nitelik = "Sabit"
+    gezegen = "Güneş"
+    renk = "#f59e0b"
+    icon = "leo"
+  [params.burclar.basak]
+    ad = "Başak"
+    slug = "basak-burcu"
+    tarih = "23 Ağustos - 22 Eylül"
+    element = "Toprak"
+    nitelik = "Değişken"
+    gezegen = "Merkür"
+    renk = "#a3a3a3"
+    icon = "virgo"
+  [params.burclar.terazi]
+    ad = "Terazi"
+    slug = "terazi-burcu"
+    tarih = "23 Eylül - 22 Ekim"
+    element = "Hava"
+    nitelik = "Öncü"
+    gezegen = "Venüs"
+    renk = "#ec4899"
+    icon = "libra"
+  [params.burclar.akrep]
+    ad = "Akrep"
+    slug = "akrep-burcu"
+    tarih = "23 Ekim - 21 Kasım"
+    element = "Su"
+    nitelik = "Sabit"
+    gezegen = "Plüton"
+    renk = "#991b1b"
+    icon = "scorpio"
+  [params.burclar.yay]
+    ad = "Yay"
+    slug = "yay-burcu"
+    tarih = "22 Kasım - 21 Aralık"
+    element = "Ateş"
+    nitelik = "Değişken"
+    gezegen = "Jüpiter"
+    renk = "#7c3aed"
+    icon = "sagittarius"
+  [params.burclar.oglak]
+    ad = "Oğlak"
+    slug = "oglak-burcu"
+    tarih = "22 Aralık - 20 Ocak"
+    element = "Toprak"
+    nitelik = "Öncü"
+    gezegen = "Satürn"
+    renk = "#374151"
+    icon = "capricorn"
+  [params.burclar.kova]
+    ad = "Kova"
+    slug = "kova-burcu"
+    tarih = "21 Ocak - 18 Şubat"
+    element = "Hava"
+    nitelik = "Sabit"
+    gezegen = "Uranüs"
+    renk = "#3b82f6"
+    icon = "aquarius"
+  [params.burclar.balik]
+    ad = "Balık"
+    slug = "balik-burcu"
+    tarih = "19 Şubat - 20 Mart"
+    element = "Su"
+    nitelik = "Değişken"
+    gezegen = "Neptün"
+    renk = "#06b6d4"
+    icon = "pisces"

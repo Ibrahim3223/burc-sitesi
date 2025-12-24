@@ -1,0 +1,98 @@
+{{- define "main" }}
+
+<!-- Günlük Yorum Premium Layout -->
+<article class="gunluk-premium">
+    <div class="container">
+        <!-- Header Card -->
+        <div class="gunluk-header-card">
+            <div class="gunluk-badge">Günlük Yorum</div>
+            {{- $slug := .File.ContentBaseName }}
+            {{- $burcInfo := index .Site.Params.burclar $slug }}
+            <h1 class="gunluk-title">{{ $burcInfo.ad }} Burcu</h1>
+            {{- if .Params.tarih }}
+            <p class="gunluk-date">{{ .Params.tarih }}</p>
+            {{- end }}
+            <p class="gunluk-intro">Bugünün enerjisi, fırsatları ve dikkat edilmesi gerekenler hakkında detaylı analiz</p>
+        </div>
+
+        <!-- Puanlama Kartları -->
+        {{- if or .Params.genel_puan .Params.ask_puani .Params.kariyer_puani .Params.saglik_puani }}
+        <div class="gunluk-scores-grid">
+            {{- with .Params.genel_puan }}
+            <div class="score-card score-card-genel">
+                <div class="score-card-icon">⭐</div>
+                <div class="score-card-content">
+                    <div class="score-card-label">Genel Enerji</div>
+                    <div class="score-card-value">{{ . }}<span class="score-max">/10</span></div>
+                    <div class="score-card-bar">
+                        <div class="score-card-fill" style="width: {{ mul . 10 }}%"></div>
+                    </div>
+                </div>
+            </div>
+            {{- end }}
+
+            {{- with .Params.ask_puani }}
+            <div class="score-card score-card-ask">
+                <div class="score-card-icon">💖</div>
+                <div class="score-card-content">
+                    <div class="score-card-label">Aşk</div>
+                    <div class="score-card-value">{{ . }}<span class="score-max">/10</span></div>
+                    <div class="score-card-bar">
+                        <div class="score-card-fill" style="width: {{ mul . 10 }}%"></div>
+                    </div>
+                </div>
+            </div>
+            {{- end }}
+
+            {{- with .Params.kariyer_puani }}
+            <div class="score-card score-card-kariyer">
+                <div class="score-card-icon">💼</div>
+                <div class="score-card-content">
+                    <div class="score-card-label">Kariyer</div>
+                    <div class="score-card-value">{{ . }}<span class="score-max">/10</span></div>
+                    <div class="score-card-bar">
+                        <div class="score-card-fill" style="width: {{ mul . 10 }}%"></div>
+                    </div>
+                </div>
+            </div>
+            {{- end }}
+
+            {{- with .Params.saglik_puani }}
+            <div class="score-card score-card-saglik">
+                <div class="score-card-icon">🏥</div>
+                <div class="score-card-content">
+                    <div class="score-card-label">Sağlık</div>
+                    <div class="score-card-value">{{ . }}<span class="score-max">/10</span></div>
+                    <div class="score-card-bar">
+                        <div class="score-card-fill" style="width: {{ mul . 10 }}%"></div>
+                    </div>
+                </div>
+            </div>
+            {{- end }}
+        </div>
+        {{- end }}
+
+        <!-- İçerik Kartları -->
+        <div class="gunluk-content-wrapper">
+            {{ .Content }}
+        </div>
+
+        <!-- Navigation -->
+        <div class="gunluk-navigation">
+            <a href="/gunluk-burc-yorumlari/" class="gunluk-nav-btn gunluk-nav-back">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <path d="M12 4L6 10L12 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span>Tüm Günlük Yorumlar</span>
+            </a>
+            <a href="/" class="gunluk-nav-btn gunluk-nav-home">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <path d="M3 10L10 3L17 10M4 9V17H7V13H13V17H16V9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span>Ana Sayfa</span>
+            </a>
+        </div>
+    </div>
+</article>
+
+{{- end }}

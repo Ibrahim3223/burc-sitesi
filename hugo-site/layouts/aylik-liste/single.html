@@ -1,0 +1,49 @@
+{{- define "main" }}
+
+<article class="liste-premium">
+    <div class="container">
+        <!-- Header -->
+        <div class="liste-header">
+            <h1 class="liste-title">Aylık Burç Yorumları</h1>
+            <p class="liste-subtitle">Aralık 2025 - 12 burç için detaylı aylık yorumlar</p>
+        </div>
+
+        <!-- Burç Yorumları Grid -->
+        <div class="burc-yorumlar-grid">
+            {{- range $key, $burc := .Site.Params.burclar }}
+            {{- $aylikPath := printf "aylik/%s.md" $key }}
+            {{- $aylik := $.Site.GetPage $aylikPath }}
+            {{- if $aylik }}
+            <a href="/aylik/{{ $key }}/" class="yorum-card" style="--burc-color: {{ $burc.renk }}">
+                <div class="yorum-card-header">
+                    <div class="yorum-card-element">
+                        <span class="element-icon">
+                            {{- if eq $burc.element "Ateş" }}🔥
+                            {{- else if eq $burc.element "Toprak" }}🌱
+                            {{- else if eq $burc.element "Hava" }}💨
+                            {{- else if eq $burc.element "Su" }}💧
+                            {{- end }}
+                        </span>
+                        <span class="element-name">{{ $burc.element }}</span>
+                    </div>
+                </div>
+
+                <div class="yorum-card-body">
+                    <h2 class="yorum-card-title">{{ $burc.ad }}</h2>
+                    <p class="yorum-card-tarih">{{ $burc.tarih }}</p>
+                </div>
+
+                <div class="yorum-card-footer">
+                    <span class="yorum-cta-text">Aylık Yorum</span>
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+            </a>
+            {{- end }}
+            {{- end }}
+        </div>
+    </div>
+</article>
+
+{{- end }}

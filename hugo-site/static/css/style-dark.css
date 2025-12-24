@@ -1,0 +1,45 @@
+/* Burç Sözlüğü Mistik Dark Theme CSS */
+:root {
+    --primary-900: #0f0a1e; --primary-800: #1a1333; --primary-700: #2d1b69;
+    --accent-gold: #f59e0b; --accent-amber: #fbbf24; --accent-purple: #8b5cf6;
+    --gradient-cosmic: linear-gradient(135deg, #0f0a1e 0%, #1a1333 25%, #2d1b69 50%, #1a1333 75%, #0f0a1e 100%);
+    --gradient-hero: linear-gradient(135deg, #0f0a1e 0%, #2d1b69 50%, #4c2f9b 100%);
+    --gradient-card: linear-gradient(145deg, #1a1333 0%, #2d1b69 100%);
+    --gray-100: #f3f4f6; --gray-200: #e5e7eb; --gray-300: #d1d5db; --gray-400: #9ca3af;
+    --gray-900: #111827; --white: #ffffff;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 1rem; line-height: 1.6;
+    color: var(--gray-100);
+    background: var(--gradient-cosmic);
+    background-attachment: fixed;
+    min-height: 100vh;
+}
+main { background: var(--primary-900); min-height: calc(100vh - 140px); }
+a { color: var(--accent-amber); text-decoration: none; transition: color 150ms; }
+a:hover { color: var(--accent-gold); }
+.header {
+    background: rgba(15, 10, 30, 0.95); backdrop-filter: blur(12px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    border-bottom: 1px solid rgba(139, 92, 246, 0.2);
+    position: sticky; top: 0; z-index: 100;
+}
+.hero {
+    background: var(--gradient-hero); color: white;
+    padding: 4rem 0; text-align: center;
+    position: relative; overflow: hidden;
+}
+.zodiac-card {
+    background: var(--gradient-card);
+    border-radius: 1rem; padding: 2rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+    border: 2px solid rgba(139, 92, 246, 0.2);
+    transition: all 300ms;
+}
+.zodiac-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 0 25px rgba(168, 85, 247, 0.5);
+}

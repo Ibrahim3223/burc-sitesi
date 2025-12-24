@@ -1,0 +1,23 @@
+{{- /* FAQPage Schema - For Pages with FAQ Sections */ -}}
+{{- /* This should be manually triggered on pages with FAQs */ -}}
+{{- if .Params.hasFAQ -}}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {{- range $index, $faq := .Params.faqs -}}
+    {{- if $index }},{{ end }}
+    {
+      "@type": "Question",
+      "name": "{{ $faq.question }}",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "{{ $faq.answer }}"
+      }
+    }
+    {{- end -}}
+  ]
+}
+</script>
+{{- end -}}

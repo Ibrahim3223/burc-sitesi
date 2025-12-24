@@ -1,0 +1,45 @@
+# Hugo
+hugo-site/public/
+hugo-site/resources/
+hugo-site/.hugo_build.lock
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+
+# Secrets
+.env
+*.env
+google-credentials.json
+scripts/google-credentials.json
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Progress tracking
+progress.json
+indexed_urls.json
+
+# Node modules (if any)
+node_modules/
+
+# Windows special files
+nul

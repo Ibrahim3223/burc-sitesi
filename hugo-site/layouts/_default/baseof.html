@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    {{- partial "head.html" . -}}
+</head>
+<body>
+    {{- partial "header.html" . -}}
+
+    <main>
+        {{- block "main" . }}{{- end }}
+    </main>
+
+    {{- partial "footer.html" . -}}
+
+    <script src="/js/lazy-load.js" defer></script>
+    <script src="/js/main.js" defer></script>
+    <script src="/js/compatibility.js" defer></script>
+    <script src="/js/interactive.js" defer></script>
+
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/sw.js').then(function(registration) {
+                    console.log('ServiceWorker registered:', registration.scope);
+                }, function(err) {
+                    console.log('ServiceWorker registration failed:', err);
+                });
+            });
+        }
+    </script>
+</body>
+</html>

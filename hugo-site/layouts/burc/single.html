@@ -1,0 +1,99 @@
+{{- define "main" }}
+
+<article class="burc-detay-premium">
+    <div class="container">
+        <!-- Hero Header -->
+        <div class="burc-hero-card">
+            <div class="burc-hero-badge">
+                <span class="hero-badge-icon">
+                    {{- if eq .Params.element "Ateş" }}🔥
+                    {{- else if eq .Params.element "Toprak" }}🌱
+                    {{- else if eq .Params.element "Hava" }}💨
+                    {{- else if eq .Params.element "Su" }}💧
+                    {{- end }}
+                </span>
+                <span class="hero-badge-text">{{ .Params.element }} Burcu</span>
+            </div>
+
+            <h1 class="burc-hero-title">{{ .Title | replaceRE " Ozellikleri.*" "" }}</h1>
+
+            {{- if .Params.tarih }}
+            <p class="burc-hero-tarih">{{ .Params.tarih }}</p>
+            {{- end }}
+
+            <p class="burc-hero-description">
+                {{ .Params.element }} elementi, {{ .Params.gezegen }} gezegeni yönetiminde. {{ .Params.nitelik }} burç özelliklerine sahip.
+            </p>
+        </div>
+
+        <!-- Quick Info Cards -->
+        <div class="burc-info-mini-grid">
+            {{- with .Params.element }}
+            <div class="info-mini-card">
+                <div class="info-mini-icon">
+                    {{- if eq . "Ateş" }}🔥
+                    {{- else if eq . "Toprak" }}🌱
+                    {{- else if eq . "Hava" }}💨
+                    {{- else if eq . "Su" }}💧
+                    {{- end }}
+                </div>
+                <div class="info-mini-content">
+                    <div class="info-mini-label">Element</div>
+                    <div class="info-mini-value">{{ . }}</div>
+                </div>
+            </div>
+            {{- end }}
+
+            {{- with .Params.gezegen }}
+            <div class="info-mini-card">
+                <div class="info-mini-icon">🪐</div>
+                <div class="info-mini-content">
+                    <div class="info-mini-label">Gezegen</div>
+                    <div class="info-mini-value">{{ . }}</div>
+                </div>
+            </div>
+            {{- end }}
+
+            {{- with .Params.nitelik }}
+            <div class="info-mini-card">
+                <div class="info-mini-icon">⭐</div>
+                <div class="info-mini-content">
+                    <div class="info-mini-label">Nitelik</div>
+                    <div class="info-mini-value">{{ . }}</div>
+                </div>
+            </div>
+            {{- end }}
+        </div>
+
+        <!-- Quick Actions -->
+        {{- $burcKey := .File.Dir | replaceRE "^burc/([^/]+).*" "$1" }}
+        {{- $burcData := index .Site.Params.burclar $burcKey }}
+        {{- $burcSlug := "" }}
+        {{- with $burcData }}
+            {{- $burcSlug = .slug }}
+        {{- end }}
+        <div class="burc-quick-actions">
+            {{- if $burcSlug }}
+            <a href="/gunluk/{{ $burcKey }}/" class="burc-action-btn burc-action-primary">
+                <span class="action-icon">📅</span>
+                <span class="action-text">Günlük Yorum</span>
+            </a>
+            <a href="/haftalik/{{ $burcKey }}/" class="burc-action-btn burc-action-secondary">
+                <span class="action-icon">📊</span>
+                <span class="action-text">Haftalık Yorum</span>
+            </a>
+            <a href="/aylik/{{ $burcKey }}/" class="burc-action-btn burc-action-secondary">
+                <span class="action-icon">📈</span>
+                <span class="action-text">Aylık Yorum</span>
+            </a>
+            {{- end }}
+        </div>
+
+        <!-- Content -->
+        <div class="burc-content-card">
+            {{ .Content }}
+        </div>
+    </div>
+</article>
+
+{{- end }}

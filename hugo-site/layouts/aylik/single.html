@@ -1,0 +1,41 @@
+{{- define "main" }}
+
+<!-- Aylık Yorum Premium Layout -->
+<article class="gunluk-premium">
+    <div class="container">
+        <!-- Header Card -->
+        <div class="gunluk-header-card">
+            <div class="gunluk-badge">Aylık Yorum</div>
+            {{- $slug := .File.ContentBaseName }}
+            {{- $burcInfo := index .Site.Params.burclar $slug }}
+            <h1 class="gunluk-title">{{ $burcInfo.ad }} Burcu</h1>
+            {{- if .Params.tarih }}
+            <p class="gunluk-date">{{ .Params.tarih }}</p>
+            {{- end }}
+            <p class="gunluk-intro">Bu ayın enerjisi, fırsatları ve dikkat edilmesi gerekenler hakkında detaylı analiz</p>
+        </div>
+
+        <!-- İçerik Kartları -->
+        <div class="gunluk-content-wrapper">
+            {{ .Content }}
+        </div>
+
+        <!-- Navigation -->
+        <div class="gunluk-navigation">
+            <a href="/aylik-burc-yorumlari/" class="gunluk-nav-btn gunluk-nav-back">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <path d="M12 4L6 10L12 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span>Tüm Aylık Yorumlar</span>
+            </a>
+            <a href="/" class="gunluk-nav-btn gunluk-nav-home">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <path d="M3 10L10 3L17 10M4 9V17H7V13H13V17H16V9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span>Ana Sayfa</span>
+            </a>
+        </div>
+    </div>
+</article>
+
+{{- end }}

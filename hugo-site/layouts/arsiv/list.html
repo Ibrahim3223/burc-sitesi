@@ -1,0 +1,88 @@
+{{- define "main" }}
+
+<article class="arsiv-premium">
+    <div class="container">
+        <!-- Header -->
+        <div class="arsiv-header">
+            <div class="arsiv-breadcrumb">
+                {{- $burcSlug := "" }}
+                {{- with .Parent }}
+                    {{- with .Parent }}
+                        {{- with .File }}
+                            {{- $burcSlug = .Dir | replaceRE "^burc/([^/]+).*" "$1" }}
+                        {{- end }}
+                    {{- end }}
+                {{- end }}
+                {{- $burcData := index .Site.Params.burclar $burcSlug }}
+                <a href="/">Ana Sayfa</a>
+                <span class="breadcrumb-sep">/</span>
+                {{- if $burcData }}
+                <a href="/{{ $burcData.slug }}/">{{ .Params.burc }} Burcu</a>
+                <span class="breadcrumb-sep">/</span>
+                {{- end }}
+                <span class="breadcrumb-current">{{ .Title }}</span>
+            </div>
+
+            <h1 class="arsiv-title">{{ .Title }}</h1>
+            <p class="arsiv-description">{{ .Description }}</p>
+        </div>
+
+        <!-- Arşiv Listesi -->
+        <div class="arsiv-liste">
+            {{- $pages := .Pages }}
+            {{- if eq (len $pages) 0 }}
+            <div class="arsiv-empty">
+                <div class="empty-icon">📁</div>
+                <p class="empty-text">Henüz arşivlenmiş yorum bulunmamaktadır.</p>
+                <p class="empty-hint">Yeni yorumlar eklendiğinde, eski yorumlar bu sayfada görüntülenecektir.</p>
+            </div>
+            {{- else }}
+            <div class="arsiv-grid">
+                {{- range $pages }}
+                <a href="{{ .RelPermalink }}" class="arsiv-card">
+                    <div class="arsiv-card-header">
+                        <span class="arsiv-card-date">{{ .Date.Format "2 January 2006" }}</span>
+                    </div>
+                    <h3 class="arsiv-card-title">{{ .Title }}</h3>
+                    {{- if .Description }}
+                    <p class="arsiv-card-description">{{ .Description | truncate 120 }}</p>
+                    {{- end }}
+                    <div class="arsiv-card-footer">
+                        <span class="arsiv-card-link">Yorumu Oku →</span>
+                    </div>
+                </a>
+                {{- end }}
+            </div>
+            {{- end }}
+        </div>
+
+        <!-- Navigation -->
+        <div class="arsiv-navigation">
+            {{- $burcSlug := "" }}
+            {{- with .Parent }}
+                {{- with .Parent }}
+                    {{- with .File }}
+                        {{- $burcSlug = .Dir | replaceRE "^burc/([^/]+).*" "$1" }}
+                    {{- end }}
+                {{- end }}
+            {{- end }}
+            {{- $burcData := index .Site.Params.burclar $burcSlug }}
+            {{- if $burcData }}
+            <a href="/{{ $burcData.slug }}/" class="arsiv-nav-btn">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <path d="M12 4L6 10L12 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span>{{ .Params.burc }} Burcu</span>
+            </a>
+            {{- end }}
+            <a href="/" class="arsiv-nav-btn">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <path d="M3 10L10 3L17 10M4 9V17H7V13H13V17H16V9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span>Ana Sayfa</span>
+            </a>
+        </div>
+    </div>
+</article>
+
+{{- end }}

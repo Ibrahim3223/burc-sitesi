@@ -1,0 +1,19 @@
+{{- $month := now.Format "January" -}}
+{{- $day := now.Format "2" -}}
+{{- $year := now.Format "2006" -}}
+
+{{- $turkishMonth := "" -}}
+{{- if eq $month "January" }}{{ $turkishMonth = "Ocak" }}{{ end -}}
+{{- if eq $month "February" }}{{ $turkishMonth = "Şubat" }}{{ end -}}
+{{- if eq $month "March" }}{{ $turkishMonth = "Mart" }}{{ end -}}
+{{- if eq $month "April" }}{{ $turkishMonth = "Nisan" }}{{ end -}}
+{{- if eq $month "May" }}{{ $turkishMonth = "Mayıs" }}{{ end -}}
+{{- if eq $month "June" }}{{ $turkishMonth = "Haziran" }}{{ end -}}
+{{- if eq $month "July" }}{{ $turkishMonth = "Temmuz" }}{{ end -}}
+{{- if eq $month "August" }}{{ $turkishMonth = "Ağustos" }}{{ end -}}
+{{- if eq $month "September" }}{{ $turkishMonth = "Eylül" }}{{ end -}}
+{{- if eq $month "October" }}{{ $turkishMonth = "Ekim" }}{{ end -}}
+{{- if eq $month "November" }}{{ $turkishMonth = "Kasım" }}{{ end -}}
+{{- if eq $month "December" }}{{ $turkishMonth = "Aralık" }}{{ end -}}
+
+{{- printf "%s %s %s" $day $turkishMonth $year -}}

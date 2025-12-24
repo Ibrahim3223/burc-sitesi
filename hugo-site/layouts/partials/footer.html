@@ -1,0 +1,62 @@
+<footer class="footer">
+    <div class="container">
+        <div class="footer-grid">
+            <!-- Site Bilgisi -->
+            <div class="footer-section">
+                <div class="footer-logo">
+                    <img src="/logo.png" alt="{{ .Site.Title }}" class="footer-logo-image">
+                    <span class="logo-text">{{ .Site.Title }}</span>
+                </div>
+                <p class="footer-description">
+                    Günlük, haftalık ve aylık burç yorumları
+                </p>
+            </div>
+
+            <!-- Burçlar -->
+            <div class="footer-section">
+                <h3 class="footer-title">Burçlar</h3>
+                <ul class="footer-links">
+                    <li><a href="/koc-burcu/">Koç Burcu</a></li>
+                    <li><a href="/boga-burcu/">Boğa Burcu</a></li>
+                    <li><a href="/ikizler-burcu/">İkizler Burcu</a></li>
+                    <li><a href="/yengec-burcu/">Yengeç Burcu</a></li>
+                    <li><a href="/aslan-burcu/">Aslan Burcu</a></li>
+                    <li><a href="/basak-burcu/">Başak Burcu</a></li>
+                </ul>
+            </div>
+
+            <!-- Daha Fazla -->
+            <div class="footer-section">
+                <h3 class="footer-title">Daha Fazla</h3>
+                <ul class="footer-links">
+                    <li><a href="/terazi-burcu/">Terazi Burcu</a></li>
+                    <li><a href="/akrep-burcu/">Akrep Burcu</a></li>
+                    <li><a href="/yay-burcu/">Yay Burcu</a></li>
+                    <li><a href="/oglak-burcu/">Oğlak Burcu</a></li>
+                    <li><a href="/kova-burcu/">Kova Burcu</a></li>
+                    <li><a href="/balik-burcu/">Balık Burcu</a></li>
+                </ul>
+            </div>
+
+            <!-- Bilgi -->
+            <div class="footer-section">
+                <h3 class="footer-title">Bilgi</h3>
+                <ul class="footer-links">
+                    {{- range .Site.Menus.footer }}
+                    <li><a href="{{ .URL }}">{{ .Name }}</a></li>
+                    {{- end }}
+                </ul>
+            </div>
+        </div>
+
+        <!-- Footer Bottom -->
+        <div class="footer-bottom">
+            <p>&copy; {{ now.Year }} {{ .Site.Title }}. Tüm hakları saklıdır.</p>
+        </div>
+    </div>
+
+    <!-- Back to Top -->
+    <button class="back-to-top" id="backToTop" aria-label="Yukarı Çık">
+        ↑
+    </button>
+</footer>

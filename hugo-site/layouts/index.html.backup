@@ -1,0 +1,105 @@
+{{- define "main" }}
+
+<!-- Hero Section -->
+<section class="hero">
+    <div class="container">
+        <h1 class="hero-title">Burç Sözlüğü</h1>
+        <p class="hero-subtitle">12 burç için günlük, haftalık ve aylık yorumlar</p>
+
+        <!-- Burç Kartları -->
+        <div class="zodiac-grid">
+            {{- range $key, $burc := .Site.Params.burclar }}
+            <a href="/{{ $burc.slug }}/" class="zodiac-card" style="--burc-color: {{ $burc.renk }}">
+                <div class="zodiac-icon">{{ $burc.ad }}</div>
+                <h3 class="zodiac-name">{{ $burc.ad }}</h3>
+                <p class="zodiac-date">{{ $burc.tarih }}</p>
+                <span class="zodiac-element">{{ $burc.element }}</span>
+            </a>
+            {{- end }}
+        </div>
+    </div>
+</section>
+
+<!-- Günlük Yorumlar Özeti -->
+<section class="daily-summary">
+    <div class="container">
+        <h2 class="section-title">Bugünün Burç Yorumları</h2>
+        <p class="section-subtitle">Her burç için güncel yorum</p>
+
+        <div class="summary-grid">
+            {{- range first 12 (where .Site.RegularPages "Section" "burc") }}
+            {{- $gunluk := printf "content/burc/%s/gunluk.md" .File.ContentBaseName }}
+            <div class="summary-card">
+                <h3>{{ .Title }}</h3>
+                <p class="summary-excerpt">Bugün {{ lower .Title }} için...</p>
+                <a href="/{{ .File.ContentBaseName }}/gunluk/" class="btn-sm">Günlük Yorum</a>
+            </div>
+            {{- end }}
+        </div>
+    </div>
+</section>
+
+<!-- Burç Uyumu Widget -->
+<section class="compatibility-widget">
+    <div class="container">
+        <h2 class="section-title">Burç Uyumu Hesapla</h2>
+        <p class="section-subtitle">İki burç arasındaki uyumu öğrenin</p>
+
+        <div class="compatibility-form">
+            <div class="form-group">
+                <label for="burc1">Birinci Burç</label>
+                <select id="burc1" class="form-select">
+                    <option value="">Seçiniz</option>
+                    {{- range $key, $burc := .Site.Params.burclar }}
+                    <option value="{{ $burc.slug }}">{{ $burc.ad }}</option>
+                    {{- end }}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="burc2">İkinci Burç</label>
+                <select id="burc2" class="form-select">
+                    <option value="">Seçiniz</option>
+                    {{- range $key, $burc := .Site.Params.burclar }}
+                    <option value="{{ $burc.slug }}">{{ $burc.ad }}</option>
+                    {{- end }}
+                </select>
+            </div>
+
+            <button onclick="checkCompatibility()" class="btn-primary">Uyumu Hesapla</button>
+        </div>
+    </div>
+</section>
+
+<!-- Hızlı Linkler -->
+<section class="quick-links">
+    <div class="container">
+        <div class="links-grid">
+            <a href="/gunluk-burc-yorumlari/" class="link-card">
+                <div class="link-icon">📅</div>
+                <h3>Günlük Yorumlar</h3>
+                <p>Her gün güncellenen burç yorumları</p>
+            </a>
+
+            <a href="/haftalik-burc-yorumlari/" class="link-card">
+                <div class="link-icon">📊</div>
+                <h3>Haftalık Yorumlar</h3>
+                <p>Haftalık detaylı analizler</p>
+            </a>
+
+            <a href="/aylik-burc-yorumlari/" class="link-card">
+                <div class="link-icon">📈</div>
+                <h3>Aylık Yorumlar</h3>
+                <p>Ay boyunca neler olacak</p>
+            </a>
+
+            <a href="/yukselen-burc/" class="link-card">
+                <div class="link-icon">🌅</div>
+                <h3>Yükselen Burç</h3>
+                <p>Yükselen burcunuzu hesaplayın</p>
+            </a>
+        </div>
+    </div>
+</section>
+
+{{- end }}

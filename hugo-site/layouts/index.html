@@ -1,0 +1,218 @@
+{{- define "main" }}
+
+<!-- Hero Section -->
+<section class="hero">
+    <div class="container">
+        <div class="hero-content">
+            <!-- Meta Bilgiler -->
+            <div class="hero-meta">
+                <span class="hero-meta-item">
+                    <span class="meta-icon">📅</span>
+                    <span class="meta-text">{{- partial "turkish-date.html" . -}}</span>
+                </span>
+                <span class="hero-meta-item">
+                    <span class="meta-icon">🌙</span>
+                    <span class="meta-text">Dolunay Fazı</span>
+                </span>
+                <span class="hero-meta-item">
+                    <span class="meta-icon">⭐</span>
+                    <span class="meta-text">Merkür Retrograd</span>
+                </span>
+            </div>
+
+            <h1 class="hero-title">Burç Sözlüğü</h1>
+            <p class="hero-subtitle">12 burç için günlük, haftalık ve aylık yorumlar</p>
+
+            <!-- Arama Kutusu -->
+            <div class="hero-search">
+                <div class="search-box">
+                    <input type="text"
+                           class="search-input"
+                           placeholder="Burcunuzu arayın... (örn: Koç, Boğa)"
+                           id="heroSearch"
+                           autocomplete="off">
+                    <button class="search-button" onclick="searchZodiac()">
+                        <span>Ara</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Burç Kartları -->
+        <div class="zodiac-grid">
+            {{- range $key, $burc := .Site.Params.burclar }}
+            {{- $gunlukPath := printf "gunluk/%s.md" $key }}
+            {{- $gunluk := $.Site.GetPage $gunlukPath }}
+            <div class="zodiac-card-premium" style="--burc-color: {{ $burc.renk }}">
+                <div class="card-header">
+                    <span class="element-badge element-{{ lower $burc.element }}">{{ $burc.element }}</span>
+                </div>
+
+                <div class="card-body">
+                    <h3 class="zodiac-name">{{ $burc.ad }}</h3>
+                    <p class="zodiac-date">{{ $burc.tarih }}</p>
+
+                    {{- if $gunluk }}
+                    <p class="zodiac-preview">Bugünün enerjisi, fırsatları ve dikkat edilmesi gerekenler hakkında detaylı analiz</p>
+                    {{- else }}
+                    <p class="zodiac-preview zodiac-no-data">{{ $burc.ad }} burcu özellikleri, kişilik analizi ve uyumu</p>
+                    {{- end }}
+                </div>
+
+                <div class="card-footer">
+                    {{- if $gunluk }}
+                    <a href="/gunluk/{{ $key }}/" class="card-cta">
+                        <span>Günlük Yorum</span>
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                            <path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a>
+                    {{- else }}
+                    <a href="/{{ $burc.slug }}/" class="card-cta">
+                        <span>Burç Detayı</span>
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                            <path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a>
+                    {{- end }}
+                </div>
+            </div>
+            {{- end }}
+        </div>
+    </div>
+</section>
+
+<!-- Burç Uyumu Widget -->
+<section class="compatibility-widget">
+    <div class="container">
+        <h2 class="section-title">Burç Uyumu Hesapla</h2>
+        <p class="section-subtitle">İki burç arasındaki uyumu öğrenin</p>
+
+        <div class="compatibility-calculator">
+            <div class="compatibility-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="burc1">Birinci Burç</label>
+                        <select id="burc1" class="form-select">
+                            <option value="">Seçiniz</option>
+                            {{- range $key, $burc := .Site.Params.burclar }}
+                            <option value="{{ $burc.slug }}" data-name="{{ $burc.ad }}" data-element="{{ $burc.element }}">{{ $burc.ad }}</option>
+                            {{- end }}
+                        </select>
+                    </div>
+
+                    <div class="compatibility-vs">
+                        <span class="vs-icon">💕</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="burc2">İkinci Burç</label>
+                        <select id="burc2" class="form-select">
+                            <option value="">Seçiniz</option>
+                            {{- range $key, $burc := .Site.Params.burclar }}
+                            <option value="{{ $burc.slug }}" data-name="{{ $burc.ad }}" data-element="{{ $burc.element }}">{{ $burc.ad }}</option>
+                            {{- end }}
+                        </select>
+                    </div>
+                </div>
+
+                <button onclick="calculateCompatibility()" class="btn-compatibility">
+                    <span class="btn-icon">✨</span>
+                    <span class="btn-text">Uyumu Hesapla</span>
+                </button>
+            </div>
+
+            <!-- Sonuç Alanı -->
+            <div id="compatibilityResult" class="compatibility-result" style="display: none;">
+                <div class="result-header">
+                    <h3 class="result-title" id="resultTitle"></h3>
+                    <div class="result-score">
+                        <div class="score-circle">
+                            <svg class="score-svg" viewBox="0 0 100 100">
+                                <circle class="score-bg" cx="50" cy="50" r="45"></circle>
+                                <circle class="score-fill" id="scoreCircle" cx="50" cy="50" r="45"></circle>
+                            </svg>
+                            <div class="score-text">
+                                <span class="score-number" id="scoreNumber">0</span>
+                                <span class="score-label">/10</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="result-body">
+                    <div class="result-category">
+                        <div class="category-icon">❤️</div>
+                        <div class="category-content">
+                            <h4>Aşk Uyumu</h4>
+                            <div class="category-bar">
+                                <div class="category-fill" id="loveFill"></div>
+                            </div>
+                            <p class="category-score" id="loveScore">0/10</p>
+                        </div>
+                    </div>
+
+                    <div class="result-category">
+                        <div class="category-icon">🤝</div>
+                        <div class="category-content">
+                            <h4>Arkadaşlık Uyumu</h4>
+                            <div class="category-bar">
+                                <div class="category-fill" id="friendshipFill"></div>
+                            </div>
+                            <p class="category-score" id="friendshipScore">0/10</p>
+                        </div>
+                    </div>
+
+                    <div class="result-category">
+                        <div class="category-icon">💼</div>
+                        <div class="category-content">
+                            <h4>İş Uyumu</h4>
+                            <div class="category-bar">
+                                <div class="category-fill" id="workFill"></div>
+                            </div>
+                            <p class="category-score" id="workScore">0/10</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="result-footer">
+                    <p class="result-description" id="resultDescription"></p>
+                    <a href="#" id="detailLink" class="btn-detail">Detaylı Analiz</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Hızlı Linkler -->
+<section class="quick-links">
+    <div class="container">
+        <div class="links-grid">
+            <a href="/gunluk-burc-yorumlari/" class="link-card">
+                <div class="link-icon">📅</div>
+                <h3>Günlük Yorumlar</h3>
+                <p>Her gün güncellenen burç yorumları</p>
+            </a>
+
+            <a href="/haftalik-burc-yorumlari/" class="link-card">
+                <div class="link-icon">📊</div>
+                <h3>Haftalık Yorumlar</h3>
+                <p>Haftalık detaylı analizler</p>
+            </a>
+
+            <a href="/aylik-burc-yorumlari/" class="link-card">
+                <div class="link-icon">📈</div>
+                <h3>Aylık Yorumlar</h3>
+                <p>Ay boyunca neler olacak</p>
+            </a>
+
+            <a href="/yukselen-burc/" class="link-card">
+                <div class="link-icon">🌅</div>
+                <h3>Yükselen Burç</h3>
+                <p>Yükselen burcunuzu hesaplayın</p>
+            </a>
+        </div>
+    </div>
+</section>
+
+{{- end }}

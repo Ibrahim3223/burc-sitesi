@@ -1,0 +1,33 @@
+{{- /* Compatibility/Review Schema - For Zodiac Compatibility Pages */ -}}
+{{- if eq .Params.type "uyum" -}}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Review",
+  "itemReviewed": {
+    "@type": "Thing",
+    "name": "{{ .Params.burc1 }} ve {{ .Params.burc2 }} Burç Uyumu"
+  },
+  "reviewRating": {
+    "@type": "Rating",
+    "ratingValue": "{{ if .Params.rating }}{{ .Params.rating }}{{ else }}7{{ end }}",
+    "bestRating": "10",
+    "worstRating": "1"
+  },
+  "author": {
+    "@type": "Organization",
+    "name": "{{ .Site.Title }}"
+  },
+  "reviewBody": "{{ .Description }}",
+  "datePublished": "{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}",
+  "publisher": {
+    "@type": "Organization",
+    "name": "{{ .Site.Title }}",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "{{ .Site.BaseURL }}images/logo.png"
+    }
+  }
+}
+</script>
+{{- end -}}
