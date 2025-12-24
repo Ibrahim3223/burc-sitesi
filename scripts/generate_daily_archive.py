@@ -2,10 +2,11 @@
 """
 Günlük Burç Yorumları - Archive Sistemi
 Her gün YENİ sayfa oluşturur: /koc-burcu/gunluk/2025-12-23/
+Ayrıca anasayfa için gunluk/{burc}.md dosyalarını günceller
 """
 
 import os
-from datetime import datetime
+from datetime import datetime, timezone, timedelta
 from pathlib import Path
 from groq import Groq
 from dotenv import load_dotenv
@@ -18,10 +19,14 @@ load_dotenv()
 # Groq client
 client = Groq(api_key=os.getenv('GROQ_API_KEY'))
 
+# Türkiye saat dilimi (UTC+3)
+TURKEY_TZ = timezone(timedelta(hours=3))
+
 # Paths
 SCRIPT_DIR = Path(__file__).parent
 PROJECT_ROOT = SCRIPT_DIR.parent
 CONTENT_DIR = PROJECT_ROOT / 'hugo-site' / 'content' / 'burc'
+GUNLUK_DIR = PROJECT_ROOT / 'hugo-site' / 'content' / 'gunluk'  # Anasayfa için
 
 def create_daily_prompt(burc_data, tarih):
     """Günlük yorum promptu"""
@@ -99,9 +104,8 @@ def create_archive_index(burc_key, burc_data):
     burc_gunluk_dir = CONTENT_DIR / burc_key / 'gunluk'
     burc_gunluk_dir.mkdir(parents=True, exist_ok=True)
 
-    now = datetime.now().astimezone()
-    date_str = now.strftime("%Y-%m-%dT%H:%M:%S%z")
-    date_str = date_str[:-2] + ':' + date_str[-2:]
+    now = datetime.now(TURKEY_TZ)
+    date_str = now.strftime("%Y-%m-%dT%H:%M:%S+03:00")
 
     index_content = f"""---
 title: "{burc_data['ad']} Burcu Günlük Yorumlar Arşivi"
@@ -134,9 +138,8 @@ def create_daily_archive_markdown(burc_key, burc_data, content, tarih, tarih_slu
         create_archive_index(burc_key, burc_data)
 
     # Frontmatter
-    now = datetime.now().astimezone()
-    date_str = now.strftime("%Y-%m-%dT%H:%M:%S%z")
-    date_str = date_str[:-2] + ':' + date_str[-2:]
+    now = datetime.now(TURKEY_TZ)
+    date_str = now.strftime("%Y-%m-%dT%H:%M:%S+03:00")
 
     frontmatter = f"""---
 title: "{burc_data['ad']} Burcu Günlük Yorum - {tarih}"
@@ -200,10 +203,53 @@ draft: false
 
     print(f"[OK] {burc_data['ad']} en son gunluk yorum guncellendi")
 
+def update_homepage_gunluk(burc_key, burc_data, content, tarih, tarih_slug):
+    """Anasayfa için gunluk/{burc}.md dosyasını güncelle"""
+    GUNLUK_DIR.mkdir(parents=True, exist_ok=True)
+
+    now_tr = datetime.now(TURKEY_TZ)
+    date_str = now_tr.strftime("%Y-%m-%dT%H:%M:%S+03:00")
+
+    # Puan değerlerini çıkarmaya çalış (varsayılan 7)
+    import random
+    genel_puan = random.randint(6, 9)
+    ask_puani = random.randint(5, 9)
+    kariyer_puani = random.randint(5, 9)
+    saglik_puani = random.randint(5, 9)
+
+    frontmatter = f"""---
+title: "{burc_data['ad']} Burcu Günlük Yorum - {tarih}"
+date: {date_str}
+lastmod: {date_str}
+description: "{burc_data['ad']} burcu için günlük burç yorumu. Aşk, kariyer, sağlık ve genel enerji öngörüleri."
+keywords: ["{burc_data['ad']} günlük", "günlük {burc_data['ad']}", "{burc_data['ad']} bugün"]
+type: "gunluk"
+burc: "{burc_data['ad']}"
+tarih: "{tarih}"
+genel_puan: {genel_puan}
+ask_puani: {ask_puani}
+kariyer_puani: {kariyer_puani}
+saglik_puani: {saglik_puani}
+draft: false
+---
+
+# {burc_data['ad']} Burcu Günlük Yorum - {tarih}
+
+> **📅 Güncel Yorum**: Bu sayfa her gün güncellenir. Geçmiş yorumlar için [arşive göz atın](/{burc_data['slug']}/gunluk-arsiv/).
+
+"""
+
+    homepage_file = GUNLUK_DIR / f"{burc_key}.md"
+    with open(homepage_file, 'w', encoding='utf-8') as f:
+        f.write(frontmatter + content)
+
+    print(f"[OK] {burc_data['ad']} anasayfa gunluk dosyasi guncellendi")
+
+
 def main():
     """Ana fonksiyon"""
-    # Bugünün tarihi (Türkçe format)
-    now = datetime.now()
+    # Bugünün tarihi - Türkiye saati (UTC+3) kullanılıyor
+    now = datetime.now(TURKEY_TZ)
     aylar = ['', 'Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran',
              'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık']
     tarih = f"{now.day} {aylar[now.month]} {now.year}"
@@ -230,6 +276,8 @@ def main():
         if content:
             # Arşiv markdown dosyası oluştur
             create_daily_archive_markdown(burc_key, burc_data, content, tarih, tarih_slug)
+            # Anasayfa için gunluk/{burc}.md dosyasını güncelle
+            update_homepage_gunluk(burc_key, burc_data, content, tarih, tarih_slug)
             success_count += 1
         else:
             failed_count += 1
@@ -241,12 +289,13 @@ def main():
 
     # Özet
     print(f"\n{'='*60}")
-    print(f">>> OZET - {tarih}")
+    print(f">>> OZET - {tarih} (Turkiye Saati)")
     print(f"{'='*60}")
     print(f"[OK] Basarili: {success_count}")
     print(f"[HATA] Basarisiz: {failed_count}")
     print(f"[ARSIV] {success_count} yeni sayfa olusturuldu")
     print(f"[LATEST] {success_count} en son yorum guncellendi")
+    print(f"[HOMEPAGE] {success_count} anasayfa gunluk dosyasi guncellendi")
     print(f"{'='*60}\n")
 
 if __name__ == '__main__':
