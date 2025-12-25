@@ -4,21 +4,71 @@
 <section class="hero">
     <div class="container">
         <div class="hero-content">
-            <!-- Meta Bilgiler -->
+            <!-- Meta Bilgiler (JavaScript ile dinamik güncellenir) -->
             <div class="hero-meta">
                 <span class="hero-meta-item">
                     <span class="meta-icon">📅</span>
-                    <span class="meta-text">{{- partial "turkish-date.html" . -}}</span>
+                    <span class="meta-text" id="currentDate">{{- partial "turkish-date.html" . -}}</span>
                 </span>
                 <span class="hero-meta-item">
                     <span class="meta-icon">🌙</span>
-                    <span class="meta-text">Dolunay Fazı</span>
+                    <span class="meta-text" id="moonPhase">Ay Fazı</span>
                 </span>
-                <span class="hero-meta-item">
+                <span class="hero-meta-item" id="retrogradeItem" style="display: none;">
                     <span class="meta-icon">⭐</span>
-                    <span class="meta-text">Merkür Retrograd</span>
+                    <span class="meta-text" id="retrogradeText">Merkür Retrograd</span>
                 </span>
             </div>
+
+            <script>
+            // Türkçe tarih güncelleme
+            (function() {
+                const aylar = ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran',
+                               'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'];
+                const now = new Date();
+                const tarih = now.getDate() + ' ' + aylar[now.getMonth()] + ' ' + now.getFullYear();
+                document.getElementById('currentDate').textContent = tarih;
+
+                // Ay fazı hesaplama (basitleştirilmiş)
+                function getMoonPhase(date) {
+                    let year = date.getFullYear();
+                    let month = date.getMonth() + 1;
+                    const day = date.getDate();
+
+                    if (month < 3) {
+                        year--;
+                        month += 12;
+                    }
+                    ++month;
+                    const c = 365.25 * year;
+                    const e = 30.6 * month;
+                    let jd = c + e + day - 694039.09;
+                    jd /= 29.5305882;
+                    let b = parseInt(jd);
+                    jd -= b;
+                    b = Math.round(jd * 8);
+                    if (b >= 8) b = 0;
+
+                    const phases = ['Yeni Ay', 'Hilal (Büyüyen)', 'İlk Dördün', 'Şişkin Ay (Büyüyen)',
+                                   'Dolunay', 'Şişkin Ay (Küçülen)', 'Son Dördün', 'Hilal (Küçülen)'];
+                    return phases[b];
+                }
+
+                document.getElementById('moonPhase').textContent = getMoonPhase(now);
+
+                // Merkür retrograd dönemleri 2025 (yaklaşık tarihler)
+                const retrograds = [
+                    { start: new Date(2025, 2, 15), end: new Date(2025, 3, 7) },   // 15 Mart - 7 Nisan
+                    { start: new Date(2025, 6, 18), end: new Date(2025, 7, 11) },  // 18 Temmuz - 11 Ağustos
+                    { start: new Date(2025, 10, 9), end: new Date(2025, 10, 29) }  // 9 Kasım - 29 Kasım
+                ];
+
+                const isRetrograde = retrograds.some(r => now >= r.start && now <= r.end);
+                if (isRetrograde) {
+                    document.getElementById('retrogradeItem').style.display = 'inline-flex';
+                }
+            })();
+            </script>
 
             <h1 class="hero-title">Burç Sözlüğü</h1>
             <p class="hero-subtitle">12 burç için günlük, haftalık ve aylık yorumlar</p>
