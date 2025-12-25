@@ -5,36 +5,48 @@ on:
     - cron: '15 21 * * *'  # Her gün saat 21:15 UTC (00:15 Türkiye saati - yeni gün)
   workflow_dispatch:  # Manuel tetikleme için
 
+concurrency:
+  group: burc-content-update
+  cancel-in-progress: false
+
 jobs:
   generate-daily-horoscopes:
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      
+        with:
+          fetch-depth: 0
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      
+
       - name: Install dependencies
         run: |
           pip install groq python-dotenv
-      
+
       - name: Generate daily horoscopes
         env:
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
         run: |
           cd scripts
           python generate_daily_archive.py
-      
+
       - name: Commit and push changes
         run: |
           git config --global user.name 'GitHub Actions Bot'
           git config --global user.email 'actions@github.com'
           git add hugo-site/content/burc/ hugo-site/content/gunluk/
           git diff --staged --quiet || git commit -m "🌟 Günlük burç yorumları: $(TZ='Europe/Istanbul' date +'%Y-%m-%d')"
-          git push
+
+          # Pull latest changes and retry push up to 3 times
+          for i in 1 2 3; do
+            git pull --rebase origin main && git push && break
+            echo "Push failed, retrying in 5 seconds... (attempt $i/3)"
+            sleep 5
+          done
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
