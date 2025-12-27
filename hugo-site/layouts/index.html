@@ -1,5 +1,19 @@
 {{- define "main" }}
 
+<style>
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+</style>
+
 <!-- Hero Section -->
 <section class="hero">
     <div class="container">
@@ -89,6 +103,7 @@
         </div>
 
         <!-- Burç Kartları -->
+        <h2 class="sr-only">12 Burç İşaretleri</h2>
         <div class="zodiac-grid">
             {{- range $key, $burc := .Site.Params.burclar }}
             {{- $gunlukPath := printf "gunluk/%s.md" $key }}
@@ -237,6 +252,7 @@
 <!-- Hızlı Linkler -->
 <section class="quick-links">
     <div class="container">
+        <h2 class="sr-only">Hızlı Erişim</h2>
         <div class="links-grid">
             <a href="/gunluk-burc-yorumlari/" class="link-card">
                 <div class="link-icon">📅</div>
