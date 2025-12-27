@@ -1,0 +1,184 @@
+{{- /* Internal Links for Zodiac Pages */ -}}
+{{- $burcKey := .File.Dir | replaceRE "^burc/([^/]+).*" "$1" }}
+{{- $burcData := index .Site.Params.burclar $burcKey }}
+{{- $currentElement := .Params.element }}
+{{- $currentNitelik := .Params.nitelik }}
+
+<section class="internal-links-section">
+    <div class="container">
+        <!-- Burç Yorumları -->
+        <div class="links-group">
+            <h2 class="links-title">{{ $burcData.ad }} Burcu Yorumları</h2>
+            <div class="links-grid">
+                <a href="/gunluk/{{ $burcKey }}/" class="link-card-mini">
+                    <span class="link-icon">📅</span>
+                    <span class="link-text">{{ $burcData.ad }} Günlük Yorum</span>
+                </a>
+                <a href="/haftalik/{{ $burcKey }}/" class="link-card-mini">
+                    <span class="link-icon">📊</span>
+                    <span class="link-text">{{ $burcData.ad }} Haftalık Yorum</span>
+                </a>
+                <a href="/aylik/{{ $burcKey }}/" class="link-card-mini">
+                    <span class="link-icon">📈</span>
+                    <span class="link-text">{{ $burcData.ad }} Aylık Yorum</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- En Uyumlu Burçlar -->
+        <div class="links-group">
+            <h2 class="links-title">{{ $burcData.ad }} Burcu Uyumu</h2>
+            <div class="links-grid">
+                {{- range $key, $burc := .Site.Params.burclar }}
+                    {{- if and (eq $burc.element $currentElement) (ne $key $burcKey) }}
+                <a href="/burc-uyumu/{{ $burcKey }}-{{ $key }}/" class="link-card-mini">
+                    <span class="link-icon">💕</span>
+                    <span class="link-text">{{ $burcData.ad }} - {{ $burc.ad }} Uyumu</span>
+                </a>
+                    {{- end }}
+                {{- end }}
+            </div>
+        </div>
+
+        <!-- Benzer Burçlar -->
+        <div class="links-group">
+            <h2 class="links-title">Benzer Burçlar ({{ $currentElement }} Elementi)</h2>
+            <div class="links-grid">
+                {{- range $key, $burc := .Site.Params.burclar }}
+                    {{- if and (eq $burc.element $currentElement) (ne $key $burcKey) }}
+                <a href="/burc/{{ $key }}/" class="link-card-mini">
+                    <span class="link-icon" style="color: {{ $burc.renk }}">
+                        {{- if eq $burc.element "Ateş" }}🔥
+                        {{- else if eq $burc.element "Toprak" }}🌱
+                        {{- else if eq $burc.element "Hava" }}💨
+                        {{- else if eq $burc.element "Su" }}💧
+                        {{- end }}
+                    </span>
+                    <span class="link-text">{{ $burc.ad }} Burcu</span>
+                </a>
+                    {{- end }}
+                {{- end }}
+            </div>
+        </div>
+
+        <!-- Tüm Burçlar -->
+        <div class="links-group">
+            <h2 class="links-title">Diğer Burçlar</h2>
+            <div class="links-grid-compact">
+                {{- range $key, $burc := .Site.Params.burclar }}
+                    {{- if ne $key $burcKey }}
+                <a href="/burc/{{ $key }}/" class="link-tag">{{ $burc.ad }}</a>
+                    {{- end }}
+                {{- end }}
+            </div>
+        </div>
+
+        <!-- Hızlı Erişim -->
+        <div class="links-group">
+            <h2 class="links-title">Astroloji Rehberi</h2>
+            <div class="links-grid">
+                <a href="/gunluk-burc-yorumlari/" class="link-card-mini">
+                    <span class="link-icon">📅</span>
+                    <span class="link-text">Tüm Günlük Yorumlar</span>
+                </a>
+                <a href="/haftalik-burc-yorumlari/" class="link-card-mini">
+                    <span class="link-icon">📊</span>
+                    <span class="link-text">Tüm Haftalık Yorumlar</span>
+                </a>
+                <a href="/aylik-burc-yorumlari/" class="link-card-mini">
+                    <span class="link-icon">📈</span>
+                    <span class="link-text">Tüm Aylık Yorumlar</span>
+                </a>
+                <a href="/yukselen-burc/" class="link-card-mini">
+                    <span class="link-icon">🌅</span>
+                    <span class="link-text">Yükselen Burç Hesapla</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+.internal-links-section {
+    margin-top: 3rem;
+    padding: 2rem 0;
+    background: linear-gradient(to bottom, transparent, rgba(124, 58, 237, 0.02), transparent);
+}
+
+.links-group {
+    margin-bottom: 2.5rem;
+}
+
+.links-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #1e1b4b;
+    margin-bottom: 1rem;
+}
+
+.links-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 0.75rem;
+}
+
+.links-grid-compact {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.link-card-mini {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.875rem 1rem;
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    color: #374151;
+    transition: all 0.2s ease;
+}
+
+.link-card-mini:hover {
+    border-color: #7c3aed;
+    background: #faf5ff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(124, 58, 237, 0.1);
+}
+
+.link-icon {
+    font-size: 1.25rem;
+    flex-shrink: 0;
+}
+
+.link-text {
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.link-tag {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 2rem;
+    text-decoration: none;
+    color: #6b7280;
+    font-size: 0.875rem;
+    transition: all 0.2s ease;
+}
+
+.link-tag:hover {
+    background: #7c3aed;
+    color: white;
+    border-color: #7c3aed;
+}
+
+@media (max-width: 768px) {
+    .links-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>

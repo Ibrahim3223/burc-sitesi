@@ -13,7 +13,6 @@ enableEmoji = false
 # Yapı ayarları
 timeout = "30s"
 enableInlineShortcodes = true
-disableKinds = ["robotsTXT"]
 
 # Performans optimizasyonu
 [minify]
@@ -71,11 +70,13 @@ disableKinds = ["robotsTXT"]
   section = ["HTML", "RSS"]
   page = ["HTML"]
 
-# Taksonomiler
+# Taksonomiler (SEO için)
 [taxonomies]
-  element = "element"
-  nitelik = "nitelik"
-  gezegen = "gezegen"
+  element = "elements"
+  nitelik = "modalities"
+  gezegen = "planets"
+  zodiac = "zodiacs"
+  tag = "tags"
 
 # Permalink yapısı - Disabled to allow url: parameter in frontmatter
 # [permalinks]
@@ -158,15 +159,19 @@ disableKinds = ["robotsTXT"]
   keywords = ["burç", "burç yorumu", "günlük burç", "haftalık burç", "aylık burç", "burç uyumu", "yükselen burç", "astroloji"]
 
   # Sosyal medya
-  twitter = ""
-  facebook = ""
-  instagram = ""
+  [params.social]
+    twitter = ""
+    facebook = ""
+    instagram = ""
+    pinterest = ""
 
-  # Google Analytics
+  # Analytics ve doğrulama
   googleAnalytics = ""
-
-  # Site doğrulama
   googleSiteVerification = ""
+
+  # SEO iyileştirmeleri
+  enableImageOptimization = true
+  defaultSocialImage = "/logo.png"
 
 # Burç bilgileri (data olarak kullanılacak)
 [params.burclar]

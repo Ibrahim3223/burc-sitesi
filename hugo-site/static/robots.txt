@@ -1,0 +1,31 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://burcsozlugu.com/sitemap.xml
+
+# Allow important pages
+Allow: /gunluk-burc-yorumlari/
+Allow: /haftalik-burc-yorumlari/
+Allow: /aylik-burc-yorumlari/
+Allow: /yukselen-burc/
+
+# Disallow admin and search URLs
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /*?s=*
+Disallow: /*?search=*
+Disallow: /*?burc=*
+
+# Crawl delay (be nice to servers)
+Crawl-delay: 1
+
+# Specific bots
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Yandex
+Allow: /
